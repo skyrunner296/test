@@ -1,153 +1,80 @@
-import * as React from 'react';
-import '../styles/style.css';
-import {
-  Box,
-  Link,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
-import { tableCellClasses } from '@mui/material/TableCell';
-import { styled } from '@mui/material/styles';
-import { useStaticQuery, graphql } from 'gatsby';
-// import Navbar from '../components/navbar';
+import * as React from "react"
+import { Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+import Layout from "../components/layout"
+import Seo from "../components/seo"
+import * as styles from "../components/index.module.css"
+
+const links = [
+  {
+    text: "รายชื่อสมาชิกในทีม",
+    url: "members",
+    description:
+      "แสดงรายชื่อสมาชิกทั้งหมดในทีม",
   },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+  {
+    text: "รายวิชาทั้งหมด",
+    url: "subjects",
+    description:
+      "แสดงรายวิชาทั้งหมดที่มี",
   },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
+  {
+    text: "สมาชิกแต่ละคน เรียนวิชาอะไรบ้าง วันเวลาเท่าไร ?",
+    url: "subjects-of-student",
+    description:
+      "แสดงรายวิชาที่สมาชิกแต่ละคนลงทะเบียน",
   },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
+  {
+    text: "คณะผู้จัดทำ",
+    url: "developers",
+    description:
+      "รายชื่อผู้พัฒนาในทีม",
   },
-}));
+]
 
+const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
-const IndexPage = () => {
-  const data = useStaticQuery(graphql`
-  query {
-    directus {
-      Member {
-        id
-        name
-      }
-      Subject {
-        name
-        id
-        start_time
-        end_time
-      }
-      Enrollment {
-        id
-        subject_id {
-          name
-          start_time
-          end_time
-        }
-        member_id {
-          enrollment_id {
-            id
-          }
-          name
-        }
-      }
-    }
-  }
-`
-  );
-
-  return (
-    <>
-      <div>
-        {/* <Navbar /> */}
-      </div>
-
-      <div className="table">
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Student ID</StyledTableCell>
-                <StyledTableCell align="left">Student Name</StyledTableCell>
-                <StyledTableCell align="left">Information</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.directus.Member.map((member) => (
-                <StyledTableRow key={member.id}>
-                  <StyledTableCell component="th" scope="row">
-                    {member.id}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {member.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    <Link underline="none" href={`#${member.id}`}>
-                      See more
-                    </Link>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-
-      {data.directus.Member.map((member) => (
-        <div className="profile-container" id={member.id}>
-          <div className="img-container">
-          </div>
-          <div className="typo-container">
-            <Box sx={{ width: '100%', maxWidth: 500, mt: '60px', ml: '50px' }}>
-              <Typography variant="h5" component="div" gutterBottom>
-                member ID: {member.id}
-              </Typography>
-              <Typography variant="h5" component="div" gutterBottom>
-                member Name: {member.name}
-              </Typography>
-
-            </Box>
-          </div>
-        </div>
+const IndexPage = () => (
+  <Layout>
+    <Seo title="Home" />
+    <div className={styles.textCenter}>
+      <StaticImage
+        src="../images/example.png"
+        loading="eager"
+        width={64}
+        quality={95}
+        formats={["auto", "webp", "avif"]}
+        alt=""
+        style={{ marginBottom: `var(--space-3)` }}
+      />
+      <h1>
+        Welcome to <b>Gatsby!</b>
+      </h1>
+      <p className={styles.intro}>
+      </p>
+    </div>
+    <ul className={styles.list}>
+      {links.map(link => (
+        <li key={link.url} className={styles.listItem}>
+          <a
+            className={styles.listItemLink}
+            href={`${link.url}${utmParameters}`}
+          >
+            {link.text} ↗
+          </a>
+          <p className={styles.listItemDescription}>{link.description}</p>
+        </li>
       ))}
-      {/* {data.directus.Enrollment.map((enrollment) => (
+    </ul>
+  </Layout>
+)
 
-        <Typography variant="h5" component="div" gutterBottom>
-          enrollment :
-        </Typography>
-      {
-          Enrollment.map((enrollment) => {
-            return (
-              <Typography
-                key={enrollment.enrollment.id}
-                variant="h5"
-                component="div"
-                gutterBottom
-              >
-                {enrollment.enrollment.id}
-                {enrollment.enrollment.subject_id.name}
-              </Typography>
-            );
-          })
-        }
-      ))} */}
-    </>
-  );
-};
+/**
+ * Head export to define metadata for the page
+ *
+ * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
+ */
+export const Head = () => <Seo title="Home" />
 
-export default IndexPage;
+export default IndexPage
