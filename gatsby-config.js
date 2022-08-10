@@ -1,34 +1,27 @@
 module.exports = {
-  siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
-    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
-  },
-  plugins: [
-    `gatsby-plugin-image`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
-        start_url: `/`,
-        background_color: `#663399`,
-        // This will impact how browsers show your PWA/website
-        // https://css-tricks.com/meta-theme-color-and-trickery/
-        // theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
-      },
-    },
-  ],
-}
+	// ... some gatsby configuration
+	plugins: [
+		// ... some gatsby plugins
+
+		// You can take advantage of the following plugins with gatsby-source-directus
+
+		// `gatsby-plugin-image`,
+		// `gatsby-transformer-sharp`,
+		// `gatsby-plugin-sharp`,
+
+		// Finally our plugin
+		{
+			resolve: '@directus/gatsby-source-directus',
+			options: {
+				url: `https://j3zc8tu6.directus.app`, // Fill with your Directus instance address
+				auth: {
+					token: 'GVxdg0WQsrYdfnyjjLXaZ2NPe2XtiLbD', // You can use a static token from an user
+
+					// Or you can use the credentials of an user
+					//email: "6210110083@psu.ac.th",
+					//password: "Seedan16!",
+				},
+			},
+		},
+	],
+};

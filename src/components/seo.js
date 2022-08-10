@@ -15,9 +15,7 @@ function Seo({ description, title, children }) {
       query {
         site {
           siteMetadata {
-            title
-            description
-            author
+            title        
           }
         }
       }
