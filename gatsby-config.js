@@ -1,15 +1,6 @@
 module.exports = {
-	// ... some gatsby configuration
+  pathPrefix: "/test",
 	plugins: [
-		// ... some gatsby plugins
-
-		// You can take advantage of the following plugins with gatsby-source-directus
-
-		// `gatsby-plugin-image`,
-		// `gatsby-transformer-sharp`,
-		// `gatsby-plugin-sharp`,
-
-		// Finally our plugin
 		{
 			resolve: '@directus/gatsby-source-directus',
 			options: {
